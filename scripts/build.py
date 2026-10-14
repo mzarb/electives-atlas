@@ -6,6 +6,14 @@ PDF_DIR=ROOT/'electives'
 OUTPUT=ROOT/'dist'
 EXCLUDED={'CE2020','CE2021','CE2022'}
 
+ENGINEERING_COURSE_TITLES = {
+    '0469': 'Mechanical Engineering',
+    '0668': 'Renewable Energy Engineering',
+    '0721': 'Robotics and Mechatronics',
+    '0726': 'Engineering Design',
+}
+
+
 def parse_pdf(path):
     try:
         with fitz.open(path) as pdf:
@@ -25,6 +33,8 @@ def parse_pdf(path):
     affiliate=am.group(1) if am else None
     course=am.group(2).strip() if am else re.sub(r' - Electives? Group \d+$','',title)
     if code=='PS0531': course='BSc (Hons) Cyber Security'
+    if code in ENGINEERING_COURSE_TITLES:
+        course = 'BEng / MEng ' + ENGINEERING_COURSE_TITLES[code]
     valid=re.search(r'Valid From\n(\d{4} [A-Za-z]+)',text)
     chunk=text.split('Group Deliveries')[-1].split('Affiliated Entities')[0]
     pat=re.compile(r'(?m)^([1-6])\nSemester\s*([123])\nElective\n([A-Z]{2,4}\d{3,4})\n([^\n]+)')
