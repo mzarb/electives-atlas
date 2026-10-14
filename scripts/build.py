@@ -33,6 +33,7 @@ def parse_pdf(path):
     affiliate=am.group(1) if am else None
     course=am.group(2).strip() if am else re.sub(r' - Electives? Group \d+$','',title)
     if code=='PS0531': course='BSc (Hons) Cyber Security'
+    if code=='PS0679': course='BSc (Hons) Data Science Programme'
     if code in ENGINEERING_COURSE_TITLES:
         course = 'BEng / MEng ' + ENGINEERING_COURSE_TITLES[code]
     valid=re.search(r'Valid From\n(\d{4} [A-Za-z]+)',text)
